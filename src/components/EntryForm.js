@@ -55,7 +55,7 @@ export const EntryForm = ({ entry, moods, onFormSubmit }) => {
                         <label htmlFor="entry" className="label">Entry: </label>
                         <div className="control">
                             <textarea
-                                class="textarea"
+                                className="textarea"
                                 name="entry"
                                 value={updatedEntry.entry}
                                 onChange={handleControlledInputChange}

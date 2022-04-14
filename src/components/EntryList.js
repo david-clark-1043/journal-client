@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Entry } from "./Entry";
 import { searchEntries } from "./EntryManager";
 
-export const EntryList = ({ moods, entries, onEditButtonClick, onDeleteButtonClick }) => {
+export const EntryList = ({ moods, entry_tags, entries, onEditButtonClick, onDeleteButtonClick }) => {
 
   const [filteredEntries, setEntries] = useState([]);
   const [searchedTerm, setTerm] = useState("");
@@ -35,6 +35,7 @@ export const EntryList = ({ moods, entries, onEditButtonClick, onDeleteButtonCli
         {
           moods.map(mood => {
             return <a
+              key={`mood--${mood.id}`}
               onClick={() => filterAllEntries(mood.id)}
               className={moodSelected === mood.id ? "is-active" : ""}
             >{mood.label}</a>
@@ -59,11 +60,12 @@ export const EntryList = ({ moods, entries, onEditButtonClick, onDeleteButtonCli
             .filter(happyEntries => happyEntries.mood.label === "Happy")
         */}
       {filteredEntries.map(entry => {
-        return <div className="panel-block">
+        return <div key={`entrydiv-${entry.id}`}className="panel-block">
           <Entry
             key={entry.id}
             entry={entry}
             mood={moods.find(m => m.id === entry.moodId)}
+            entry_tags={entry_tags}
             onEditButtonClick={onEditButtonClick}
             onDeleteButtonClick={onDeleteButtonClick}
           />
