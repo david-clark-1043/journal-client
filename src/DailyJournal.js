@@ -9,37 +9,24 @@ export const DailyJournal = () => {
   const [entries, setEntries] = useState([])
   const [moods, setMoods] = useState([])
   const [entry, setEntry] = useState({})
-  const [entry_tags, setentry_tags] = useState([])
+  const [tags, setTags] = useState([])
 
   useEffect(() => {
     getAllEntries()
     .then(() => getMoods())
     .then(moodsData => setMoods(moodsData))
-    // .then(() => getentry_tags())
-    // .then(entry_tagsData => {
-    //   debugger
-    //   setentry_tags(entry_tagsData)
-    // })
-  }, [])
-
-  useEffect(() => {
-    getTags()
-    .then(entry_tagsData => {
-      //debugger
-      setentry_tags(entry_tagsData)
+    .then(() => getTags())
+    .then(tagsData => {
+      setTags(tagsData)
     })
-  }, [moods])
-
-  useEffect(() => {
-    console.log(entry_tags)
-  }, [entry_tags])
+  }, [])
 
   const getAllEntries = () => {
     return getEntries().then(entriesData => setEntries(entriesData))
   }
 
   const onEditButtonClick = (entryId) => {
-    getEntryById(entryId).then(entryData => setEntry(entryData)).then(() => console.log(entry))
+    getEntryById(entryId).then(entryData => setEntry(entryData))
   }
 
   const onDeleteButtonClick = (entryId) => {
@@ -48,7 +35,7 @@ export const DailyJournal = () => {
   }
 
   const onFormSubmit = (entryData) => {
-    console.log("submit", entryData)
+    // console.log("submit", entryData)
     if (entryData.id) {
       updateEntry(entryData).then(getAllEntries)
     } else {
@@ -65,13 +52,13 @@ export const DailyJournal = () => {
     <div className="DailyJournal container">
       <div className="columns">
         <div className="column">
-          <EntryForm entry={entry} moods={moods} entry_tags={entry_tags} onFormSubmit={onFormSubmit} />
+          <EntryForm entry={entry} moods={moods} tags={tags} onFormSubmit={onFormSubmit} />
         </div>
         <div className="column">
           <EntryList
             entries={entries}
             moods={moods}
-            entry_tags={entry_tags}
+            tags={tags}
             onEditButtonClick={onEditButtonClick}
             onDeleteButtonClick={onDeleteButtonClick}
           />
